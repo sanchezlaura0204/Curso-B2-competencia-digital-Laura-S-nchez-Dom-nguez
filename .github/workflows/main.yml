@@ -1,0 +1,31 @@
+name: Desplegar eXeLearning
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Descomprimir
+        run: unzip archivo.zip -d ./publicado
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v4
+
+      - name: Subir Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './publicado'
+
+      - name: Desplegar
+        uses: actions/deploy-pages@v4
